@@ -1,4 +1,4 @@
-# Testing hdl-order 0.3.0
+# Testing hdl-order 0.7.0
 
 ## Quick run
 
@@ -50,3 +50,39 @@ A healthy 0.3.0 run should end with all normal tests passing and the documented
 limitation reported as XFAIL. If any ordinary test fails, preserve the full pytest
 traceback; it should identify whether the failure is in hdl-order itself or in an
 assumption about the installed VUnit version.
+
+
+## Release 0.6.0 verification
+
+Python 3.12, VUnit 4.7.1: **49 passed, 1 xfailed**. All previous tests retained.
+The expected failure concerns a module generated through SystemVerilog macros.
+New tests cover JSON Schema, dependency roles, CLI export, byte-hash consistency,
+headers, multiple units per file, analysis configuration and independent profiles,
+and the absence of fabricated edges from compilation order.
+
+The editable package built and installed successfully. See `docs/test-output-0.6.txt`.
+A separate OKF Workspace 0.2.0 integration test imports a real exported graph.
+
+
+## Release 0.7.0 verification
+
+Python 3.12, VUnit 4.7.1, TWYLT 1.0.0, Pydantic 2.13.5.
+**72 passed, 1 xfailed**. All previous cases retained; 23 wrapper cases added.
+
+New tests execute all eight tools through TWYLT, validate output schemas,
+check dependent/dependency roles, stdin/stdout and input.json/output.json,
+unknown fields, required project_id, business errors, bootstrap metadata when
+hdl_order cannot be imported, renders, include reports and executable few-shots.
+The returned manifest is checked against the shared strict JSON Schema 1.0.
+The known macro-generated-module limitation remains xfailed.
+
+The built wheel was installed separately; all eight JSON specs were generated
+using that installed package. A real HDL project exported by the installed wheel
+passed the shared manifest schema. Logs: docs/test-output-0.7.txt.
+The user's toolhub/toolpack-builder deployment itself was not accessed.
+
+```bash
+python -m pip install '.[test,twylt]'
+python -m pytest -q
+python scripts/export-twylt-specs.py
+```

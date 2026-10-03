@@ -2,7 +2,13 @@
 
 `hdl-order` determines HDL compilation order for projects containing VHDL, Verilog and SystemVerilog sources split across multiple libraries. It also reports design units, Verilog/SystemVerilog include relationships, explicit dependencies, and a lightweight library-qualified design-unit graph.
 
-Version **0.5.0** targets the stable **VUnit 4.7.1** API and pins `vunit_hdl==4.7.1`.
+Version **0.7.0** targets the stable **VUnit 4.7.1** API and pins `vunit_hdl==4.7.1`.
+
+## TWYLT tools (0.7.0)
+
+Eight ready-to-run tools are included in `tools/`. Install `.[twylt]` and see
+[docs/TWYLT.md](docs/TWYLT.md) for toolhub, input/output schemas, examples and local wheel installation.
+The ordinary `hdl-order` CLI remains available without the optional TWYLT extra.
 
 ## What it is for
 
@@ -358,3 +364,37 @@ See `TESTING.md` for additional details. Version 0.4.2 is the previously verifie
 ## License
 
 MIT.
+
+
+## Dependency manifest export (0.6.0)
+
+```bash
+hdl-order rtl --export-dependencies dependencies.json --dependency-format manifest-v1 --project-id fpga-demo --analysis-profile default
+```
+
+The positional path follows the same library layout as existing analysis modes.
+The export is JSON conforming to `schemas/dependency-manifest.schema.json`.
+`--project-id` is required for export; `--analysis-profile` defaults to `default`.
+Source root `rtl` maps to the analyzed project; additional external include roots
+have logical names `include-N`. Consumers explicitly map these names to their repositories.
+Paths are relative; byte hashes are SHA-256. Git revision, where available, is advisory.
+
+Edges say **dependent depends on dependency**. File nodes and library-qualified
+symbol nodes are separate; symbol nodes retain their containing file. Compilation
+order is not converted into dependency edges. Definitions, include search order,
+and explicit dependencies are recorded in the analysis configuration.
+
+This exporter deliberately reports `coverage.status: partial`: symbol edges come
+from syntactic observations, not the complete VUnit semantic dependency graph.
+Unresolved references can be absent. A consumer must not interpret an omitted
+edge as proof that a dependency has disappeared. Input changes detected between
+capture and export abort the report. This is a consistency check, not a filesystem lock.
+
+Install the extra test dependency and run the accumulated test suite:
+
+```bash
+python -m pip install -e '.[test]'
+python -m pytest -q
+```
+
+See `ADR-0.6.md` for format decisions and `CHANGELOG-0.6.md` for release checks.
