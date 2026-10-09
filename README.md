@@ -1,10 +1,29 @@
-# hdl-order
+# hdl-order 0.8.0
+
+TWYLT wrappers now load shared source helpers from shared/hdl_common using __file__.
+Install the HDL analyzer and TWYLT >=1.1.1, then retain tools/ and shared/ together.
+There is no separate wrapper Python distribution to build. The analyzer itself
+remains an installed application because it provides the backend and CLI.
+
+With TWYLT_GUARDRAILS=1, root/config/include_dirs use workspace virtual paths.
+TWYLT_WORKSPACE_ROOT must be set; each analysis root is preflighted with TWYLT.
+With guardrails disabled (the default), paths retain their original cwd semantics.
+TWYLT_ALLOWED_CWD optionally permits a separate file-transport root and descendants.
+Guardrail denials return code 6. Arbitrary backend/file access requires OS isolation;
+preflight of declared roots does not sandbox the parser or files referenced by HDL.
+
+Deployment: pip install .[twylt], then scan only tools/ with toolpack-builder.
+The old internal hdl_order.twylt_api module has moved into wrapper source files
+and shared/; source entrypoints remain tools/hdl-*/tool.py. For toolhub-images,
+update the HDL backend/source pins after publishing this release; its image
+should install the new analyzer version, not embed shared wrapper code.
+
 
 `hdl-order` determines HDL compilation order for projects containing VHDL, Verilog and SystemVerilog sources split across multiple libraries. It also reports design units, Verilog/SystemVerilog include relationships, explicit dependencies, and a lightweight library-qualified design-unit graph.
 
-Version **0.7.0** targets the stable **VUnit 4.7.1** API and pins `vunit_hdl==4.7.1`.
+Version **0.8.0** targets the stable **VUnit 4.7.1** API and pins `vunit_hdl==4.7.1`.
 
-## TWYLT tools (0.7.0)
+## TWYLT tools (0.8.0)
 
 Eight ready-to-run tools are included in `tools/`. Install `.[twylt]` and see
 [docs/TWYLT.md](docs/TWYLT.md) for toolhub, input/output schemas, examples and local wheel installation.

@@ -30,7 +30,7 @@ def test_real_tools_and_output_schema(mode,make_project,tmp_path):
     contract=json.loads(spec.stdout)
     jsonschema.validate(result,contract['outputSchema'])
     assert contract['name']==f'hdl-{mode}'
-    assert contract['version']=='0.7.0'
+    assert contract['version']=='0.8.0'
     assert contract['inputSchema']['additionalProperties'] is False
     if mode=='order':
         assert [x['file'] for x in result['compile_order']].index('lib/child.sv')<[x['file'] for x in result['compile_order']].index('lib/top.sv')
@@ -89,7 +89,7 @@ run_tool_file(sys.argv[1])
             p=subprocess.run([sys.executable,'-c',script,str(ROOT/'tools'/f'hdl-{mode}'/'tool.py')],env={**os.environ,'INPUT_DESCRIBE':describe},text=True,capture_output=True,timeout=10)
             assert p.returncode==0,p.stderr
             result=json.loads(p.stdout)
-            if describe=='requirements':assert 'hdl-order[twylt]==0.7.0' in result['content']
+            if describe=='requirements':assert 'hdl-order[twylt]==0.8.0' in result['content']
             else:
                 assert result['name']==f'hdl-{mode}'
                 assert result['inputSchema']=={} and result['outputSchema']=={}

@@ -1,3 +1,26 @@
+# Testing hdl-order 0.8.0
+
+2026-10-08, Python 3.12, TWYLT 1.1.1, VUnit 4.7.1: 81 passed, 1 expected xfail.
+All previous parser, CLI, manifest and wrapper scenarios are retained. Added eight
+root traversal checks and a copied tools/shared builder launch from nested cwd.
+The xfail is the existing unsupported macro-generated design unit case.
+No simulator run or container runtime test is claimed.
+
+The backend is installed from source; wrapper-only Python packaging is unnecessary.
+The manifest few-shot was regenerated for the new producer version/fingerprint.
+
+```bash
+python -m pip install .[test,twylt]
+# Deployment integration additionally requires builder 0.4.1.
+python -m pytest -q tests
+python scripts/export-twylt-specs.py
+```
+
+Source: GitHub https://github.com/Godhart/hdl-order
+commit 70c46c0a58230148f0e3bd9d45eec8ba1acc18de, freshly cloned for this refactor.
+
+## Earlier release results (historical)
+
 # Testing hdl-order 0.7.0
 
 ## Quick run

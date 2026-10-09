@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hdl-order"
-version = "0.7.0"
+version = "0.8.0"
 description = "HDL compile-order analysis and project checks using VUnit"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -12,8 +12,8 @@ license = {text = "MIT"}
 dependencies = ["vunit_hdl==4.7.1"]
 
 [project.optional-dependencies]
-test = ["pytest>=7", "jsonschema>=4", "twylt==1.0.0"]
-twylt = ["twylt==1.0.0"]
+test = ["pytest>=7", "jsonschema>=4", "twylt>=1.1.1,<2"]
+twylt = ["twylt>=1.1.1,<2"]
 
 [project.scripts]
 hdl-order = "hdl_order.cli:main"

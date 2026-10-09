@@ -12,7 +12,7 @@ def test_shared_schema_and_roles(make_project):
     m=build_manifest(analyze(root),'fpga')
     schema=json.loads((Path(__file__).parents[1]/'schemas/dependency-manifest.schema.json').read_text())
     jsonschema.validate(m,schema)
-    assert m['producer']['version']==__version__=='0.7.0'
+    assert m['producer']['version']==__version__=='0.8.0'
     assert any(e['dependent'].endswith('::top') and e['dependency'].endswith('::child') for e in m['edges'])
     assert all('target' not in e and 'source' not in e for e in m['edges'])
     assert m['coverage']['status']=='partial'

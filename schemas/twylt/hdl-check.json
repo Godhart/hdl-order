@@ -1,12 +1,12 @@
 {
   "format_version": "1.8",
   "name": "hdl-check",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Check HDL project: duplicate symbols and unresolved includes. Cycles and analysis failures are TWYLT business errors.",
   "requirements": {
     "tool": "pip",
     "format": "requirements.txt",
-    "content": "hdl-order[twylt]==0.7.0\n"
+    "content": "hdl-order[twylt]==0.8.0\n"
   },
   "inputSchema": {
     "additionalProperties": false,

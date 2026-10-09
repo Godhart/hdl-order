@@ -1,12 +1,12 @@
 {
   "format_version": "1.8",
   "name": "hdl-map",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Map library-qualified HDL design units to source files.",
   "requirements": {
     "tool": "pip",
     "format": "requirements.txt",
-    "content": "hdl-order[twylt]==0.7.0\n"
+    "content": "hdl-order[twylt]==0.8.0\n"
   },
   "inputSchema": {
     "additionalProperties": false,
